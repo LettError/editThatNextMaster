@@ -23,6 +23,7 @@ from AppKit import *
 from mojo.UI import *
 from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts
 
+
 def getCurrentFontAndWindowFlavor():
     """ Try to find what type the current window is and which font belongs to it."""
     windows = [w for w in NSApp().orderedWindows() if w.isVisible()]
@@ -47,9 +48,10 @@ def getGlyphWindowPosSize():
     viewScale = w.getGlyphViewScale()
     return (x, y), (width, height), settings, viewFrame, viewScale
 
-def setGlyphWindowPosSize(glyph, pos, size, animate=False, settings=None, viewFrame=None, viewScale=None):
+def setGlyphWindowPosSize(glyph, pos, size, animate=False, settings=None, viewFrame=None, viewScale=None, layerName=None):
     OpenGlyphWindow(glyph=glyph, newWindow=False)
     w = CurrentGlyphWindow()
+    #help(w)
     view = w.getGlyphView()
     w.window().setPosSize((pos[0], pos[1], size[0], size[1]), animate=animate)
     if viewScale is not None:
@@ -58,6 +60,8 @@ def setGlyphWindowPosSize(glyph, pos, size, animate=False, settings=None, viewFr
         view.scrollRectToVisible_(viewFrame)
     if settings is not None:
         setGlyphViewDisplaySettings(settings)
+    if layerName is not None:
+        w.setLayer(layerName, toToolbar=True)
 
 def setSpaceCenterWindowPosSize(font):
     w = CurrentSpaceCenterWindow()
@@ -103,16 +107,26 @@ def switch(direction=1):
     f = CurrentFont()
     if windowType == "FontWindow":
         fontWindow = CurrentFontWindow()
+        selectedGlyphs = f.selection
+        currentFontWindowQuery =  fontWindow.getGlyphCollection().getQuery()
+        #help(fontWindow)
+        selectedSmartList = fontWindow.fontOverview.views.smartList.getSelection()
         posSize = fontWindow.window().getPosSize()
         nextWindow = nextMaster.document().getMainWindow()
+        nextMaster.selection = selectedGlyphs
         nextWindow.setPosSize(posSize)
         nextWindow.show()
+        # set the selected smartlist
+        fontWindow = CurrentFontWindow()
+        fontWindow.fontOverview.views.smartList.setSelection(selectedSmartList)
+        fontWindow.getGlyphCollection().setQuery(currentFontWindowQuery)    # sorts but does not fill it in the form
     elif windowType == "SpaceCenter":
         setSpaceCenterWindowPosSize(nextMaster)
 
     elif windowType == "GlyphWindow":
         g = CurrentGlyph()
         if g is not None:
+            currentLayerName = g.layerName
             n = getOtherMaster(direction==1)
             if not g.name in n:
                 NSBeep()
@@ -122,7 +136,7 @@ def switch(direction=1):
                 rr = getGlyphWindowPosSize()
                 if rr is not None:
                     p, s, settings, viewFrame, viewScale = rr
-                    setGlyphWindowPosSize(nextGlyph, p, s, settings=settings, viewFrame=viewFrame, viewScale=viewScale)
+                    setGlyphWindowPosSize(nextGlyph, p, s, settings=settings, viewFrame=viewFrame, viewScale=viewScale, layerName=currentLayerName)
 
 if __name__ == "__main__":
     switch(-1)
