@@ -1,5 +1,5 @@
 # editThatNextMaster
-Script for RoboFont: makes switching glyph, space ord font windows super easy.
+Script for RoboFont that makes switching glyph, space or font windows super easy.
 
 If you're editing masters or whatever and you want to switch to the same glyph in the other master
 and you spend a lot of time moving glyph windows around or you've had to divide your
