@@ -16,3 +16,5 @@ The order in which these scripts woosh through the fonts: alphabetically sorted 
 
 RoboFont key commands can be added in the .py tab of the [Preferences window.](http://doc.robofont.com/documentation/workspace/preferences/python/) (link to RoboFont docs)
 
+Notes:
+* Does not work in single window mode because single window mode.
