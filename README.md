@@ -8,11 +8,12 @@ massive pixel real estate into small lots.
 Add this script to RF and wire it to a key command and then ⏩ or ⏪ cycle between the masters.
 * The script opens the window you're looking at, but for the next or previous font,
 * Maintains window location and size.
-* In glyph windows it even preserves zoom and scroll position.
-* In space windows it copies the preview text.
+* Between glyph windows it preserves zoom and scroll position.
+* Between space windows it copies the preview text and preview font size.
+* Between font windows it maintains selected glyph, current sort query and smart set selection.
 
 The other script, *editThatNextMaster.py* wooshes the other direction.
-The order in which these scripts woosh through the fonts: alphabetically sorted filepath.
+The order in which these scripts woosh through the fonts: alphabetically sorted filepaths.
 
 RoboFont key commands can be added in the .py tab of the [Preferences window.](http://doc.robofont.com/documentation/workspace/preferences/python/) (link to RoboFont docs)
 
