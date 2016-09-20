@@ -10,12 +10,15 @@ Add this script to RF and wire it to a key command and then ⏩ or ⏪ cycle bet
 * Maintains window location and size.
 * Between glyph windows it preserves zoom and scroll position.
 * Between space windows it copies the preview text and preview font size.
-* Between font windows it maintains selected glyph, current sort query and smart set selection.
+* Between font windows it maintains glyph selection, current sort query and smart group selection.
 
 The other script, *editThatNextMaster.py* wooshes the other direction.
+
 The order in which these scripts woosh through the fonts: alphabetically sorted filepaths.
 
 RoboFont key commands can be added in the .py tab of the [Preferences window.](http://doc.robofont.com/documentation/workspace/preferences/python/) (link to RoboFont docs)
 
-Notes:
+Notes
+-----
+
 * Does not work in single window mode because single window mode.
