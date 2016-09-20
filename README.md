@@ -20,8 +20,8 @@ RoboFont key commands can be added in the .py tab of the [Preferences window.](h
 
 The order in which these scripts woosh through the fonts: alphabetically sorted filepaths.
 
-
 Notes
 -----
 
 * Does not work in single window mode because single window mode.
+* Script windows, vanilla windows, preference window etc. are excluded from all the wooshing fun.
