@@ -22,7 +22,9 @@
 from AppKit import *
 from mojo.UI import *
 from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts
-
+import addSomeGlyphsWindow
+reload(addSomeGlyphsWindow)
+from addSomeGlyphsWindow import AddSomeGlyphsWindow 
 
 def getCurrentFontAndWindowFlavor():
     """ Try to find what type the current window is and which font belongs to it."""
@@ -118,8 +120,12 @@ def switch(direction=1):
         nextWindow.show()
         # set the selected smartlist
         fontWindow = CurrentFontWindow()
-        fontWindow.fontOverview.views.smartList.setSelection(selectedSmartList)
-        fontWindow.getGlyphCollection().setQuery(currentFontWindowQuery)    # sorts but does not fill it in the form
+        try:
+            fontWindow.fontOverview.views.smartList.setSelection(selectedSmartList)
+            fontWindow.getGlyphCollection().setQuery(currentFontWindowQuery)    # sorts but does not fill it in the form
+        except:
+            pass
+        AddSomeGlyphsWindow(f, nextMaster)
     elif windowType == "SpaceCenter":
         setSpaceCenterWindowPosSize(nextMaster)
 
@@ -127,11 +133,11 @@ def switch(direction=1):
         g = CurrentGlyph()
         if g is not None:
             currentLayerName = g.layerName
-            n = getOtherMaster(direction==1)
-            if not g.name in n:
+            if not g.name in nextMaster:
+                AddSomeGlyphsWindow(f, nextMaster, g.name)
                 NSBeep()
                 return None
-            nextGlyph = n[g.name]
+            nextGlyph = nextMaster[g.name]
             if nextGlyph is not None:
                 rr = getGlyphWindowPosSize()
                 if rr is not None:
