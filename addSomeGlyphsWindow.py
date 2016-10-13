@@ -10,6 +10,10 @@ import vanilla
     Suppose we hop from one font to the next and there is one or more glyphs missing.
     Show this window to make them quickly.
     
+    Todo:
+        - make sure we can only get one copy of this window
+
+    
 """
 
 
