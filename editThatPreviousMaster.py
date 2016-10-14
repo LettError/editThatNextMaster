@@ -21,7 +21,7 @@
 
 from AppKit import *
 from mojo.UI import *
-from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts
+from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow
 import addSomeGlyphsWindow
 reload(addSomeGlyphsWindow)
 from addSomeGlyphsWindow import AddSomeGlyphsWindow 
@@ -125,7 +125,10 @@ def switch(direction=1):
             fontWindow.getGlyphCollection().setQuery(currentFontWindowQuery)    # sorts but does not fill it in the form
         except:
             pass
-        AddSomeGlyphsWindow(f, nextMaster)
+        if f.path is not None and nextMaster.path is not None:
+            hasOne = False
+            OpenWindow(AddSomeGlyphsWindow, f, nextMaster)
+            #AddSomeGlyphsWindow(f, nextMaster)
     elif windowType == "SpaceCenter":
         setSpaceCenterWindowPosSize(nextMaster)
 
@@ -134,7 +137,8 @@ def switch(direction=1):
         if g is not None:
             currentLayerName = g.layerName
             if not g.name in nextMaster:
-                AddSomeGlyphsWindow(f, nextMaster, g.name)
+                OpenWindow(AddSomeGlyphsWindow, nextMaster, g.name)
+                #AddSomeGlyphsWindow(f, nextMaster, g.name)
                 NSBeep()
                 return None
             nextGlyph = nextMaster[g.name]

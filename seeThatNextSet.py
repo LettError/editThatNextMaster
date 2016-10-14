@@ -1,5 +1,5 @@
 from mojo.UI import *
-from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts
+from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow
 
 def smartSetToSpaceCenter(f, direction=1):
     # make a guess which smartset is currently on display
@@ -7,6 +7,9 @@ def smartSetToSpaceCenter(f, direction=1):
     # If we find one, take the next smartset
     # and set the space center to those names
     currentSC = CurrentSpaceCenter()
+    if currentSC is None:
+        OpenSpaceCenter(f, newWindow=False)
+        currentSC = CurrentSpaceCenter()
     currentSpaceCenterContents = currentSC.get()
     smartSets = getSmartSets()
     foundOne = False
@@ -20,7 +23,7 @@ def smartSetToSpaceCenter(f, direction=1):
                 if idx < 0:
                     idx = len(smartSets)-1
             nextSet = smartSets[idx]
-            print 'look at \"%s\"'%(nextSet.name)
+            #print 'look at \"%s\"'%(nextSet.name)
             newNames = nextSet.glyphNames
             if newNames:
                 currentSC.set(newNames)
@@ -32,11 +35,13 @@ def smartSetToSpaceCenter(f, direction=1):
 
 def seeNextSet():
     f = CurrentFont()
-    smartSetToSpaceCenter(f, 1)
-
+    if f is not None:
+        smartSetToSpaceCenter(f, 1)
+    
 def seePreviousSet():
     f = CurrentFont()
-    smartSetToSpaceCenter(f, -1)
+    if f is not None:
+        smartSetToSpaceCenter(f, -1)
 
 if __name__ == "__main__":
     seeNextSet()

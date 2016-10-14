@@ -1,26 +1,21 @@
 # coding=utf-8
 
-
 import os
 import vanilla
-
+from defconAppKit.windows.baseWindow import BaseWindowController
+from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow
+from mojo.UI import *
 
 """
 
     Suppose we hop from one font to the next and there is one or more glyphs missing.
     Show this window to make them quickly.
-    
-    Todo:
-        - make sure we can only get one copy of this window
-
-    
 """
-
 
 checkSymbol = u"✔️"
 
-
-class AddSomeGlyphsWindow(object):
+class AddSomeGlyphsWindow(BaseWindowController):
+    _windowName = u"Want some glyphs?"
     def __init__(self, src, dst, glyphName=None):
         self.src = src
         self.dst = dst
@@ -51,9 +46,9 @@ class AddSomeGlyphsWindow(object):
                 self.addGlyph(glyphName=glyphName, width = self.src[glyphName].width, hasComponents=comps, unicodeValue=unicodeValue)
         if len(self.candidates)==0:
             # no need to make this window
-            print "no glyphs missing"
+            #print "no glyphs missing"
             return
-        self.w = vanilla.Window((500, 300), "Want some glyphs?")
+        self.w = vanilla.Window((500, 300), self._windowName)
         columnDescriptions = [
             {'title': 'Glyphname', 'key': 'glyphName', 'width':200},
             {'title': 'Unicode', 'key': 'unicodeValue', 'width':80},
@@ -63,6 +58,7 @@ class AddSomeGlyphsWindow(object):
         self.candidates.sort()
         self.w.l = vanilla.List((0,29,-0,-100), self.candidates, columnDescriptions=columnDescriptions)
         self.w.l.setSelection(range(len(self.candidates)))
+        
         self.w.c = vanilla.TextBox((5, 5, -5, 20), "These glyphs are in %s but not in %s"%(os.path.basename(self.src.path), os.path.basename(self.dst.path)))
         
         self.w.copyCompsCheck = vanilla.CheckBox((10, -60, 200, 20), "Copy the glyph", value=True, callback=self.updateButtonTitle)
@@ -70,6 +66,7 @@ class AddSomeGlyphsWindow(object):
         self.w.makeButton = vanilla.Button((10, -30, -10, 20), "", callback=self.callbackMakeSelected)
         self.w.setDefaultButton(self.w.makeButton)
         self.updateButtonTitle()
+        self.setUpBaseWindowBehavior()
         self.w.open()
     
     def updateButtonTitle(self, sender=None):
@@ -122,4 +119,6 @@ if __name__ == "__main__":
     fonts = AllFonts()
     fonts.reverse()
     if len(fonts)==2:
-        w = AddSomeGlyphsWindow(fonts[0], fonts[1])
+        if fonts[0].path is not None and fonts[1].path is not None:
+            OpenWindow(AddSomeGlyphsWindow, fonts[0], fonts[1])
+
