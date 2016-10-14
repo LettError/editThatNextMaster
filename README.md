@@ -9,6 +9,8 @@ Add these scripts to RF and wire them to a key command and then ⏩ or ⏪ cycle
 
 * *editThatNextMaster.py* wooshes one way.
 * *editThatPreviousMaster.py* wooshes the other way.
+* *seeThatNextSet.py* glyphs from the next smart set to the SpaceCenter.
+* *seeThatPreviousSet.py* glyphs from the previous smart set to the SpaceCenter.
 
 RoboFont key commands can be added in the .py tab of the [Preferences window.](http://doc.robofont.com/documentation/workspace/preferences/python/) (link to RoboFont docs)
 
@@ -17,6 +19,8 @@ RoboFont key commands can be added in the .py tab of the [Preferences window.](h
 * Between glyph windows it preserves zoom and scroll position.
 * Between space windows it copies the preview text and preview font size.
 * Between font windows it maintains glyph selection, current sort query and smart group selection.
+* If there is no smart set in the current SpaceCenter the script will pick the first one.
+* If glyphs are missing a window will list them and offer the possibility to make the glyphs.
 
 The order in which these scripts woosh through the fonts: alphabetically sorted filepaths.
 
