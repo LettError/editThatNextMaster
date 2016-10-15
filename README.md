@@ -17,6 +17,7 @@ Add these scripts to RF and wire them to a key command and then ⏩ or ⏪ cycle
 * Between space windows it copies the preview text and preview font size.
 * Between font windows it maintains glyph selection, current sort query and smart group selection.
 * If glyphs are missing a window will list them and offer the possibility to make the glyphs.
+* The order in which these scripts woosh through the fonts: alphabetically sorted filepaths. Unsaved fonts with no path will be ignored.
 
 # Add Glyphs Panel
 
@@ -34,8 +35,6 @@ This panel pops up when switching between masters and one or more glyphs are mis
 * *seeThatNextSet.py* show the next smart set in the current SpaceCenter.
 * *seeThatPreviousSet.py* show the previous smart set in the current SpaceCenter.
 * If there is no smart set in the current SpaceCenter the script will pick the first one from the list.
-
-The order in which these scripts woosh through the fonts: alphabetically sorted filepaths.
 
 Notes
 -----
