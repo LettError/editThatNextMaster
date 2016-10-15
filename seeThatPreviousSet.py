@@ -1,4 +1,4 @@
 import seeThatNextSet
 reload(seeThatNextSet)
 
-# seeThatNextSet.seePreviousSet()
+seeThatNextSet.seePreviousSet()
