@@ -1,5 +1,5 @@
 # Edit That Next Master
-Script for RoboFont that makes switching glyph, space or font windows super easy.
+Scripts for [RoboFont](http://docs.robofont.com) that makes switching glyph, space or font windows super easy.
 
 # Switch between masters
 
@@ -11,12 +11,13 @@ Add these scripts to RF and wire them to a key command and then ⏩ or ⏪ cycle
 
 * *editThatNextMaster.py* wooshes one way.
 * *editThatPreviousMaster.py* wooshes the other way.
-* The script opens the window you're looking at, but for the next or previous font,
+* These scripts open the window you're looking at, but for the next or previous font,
 * Maintains window location and size.
 * Between glyph windows it preserves zoom and scroll position.
 * Between space windows it copies the preview text and preview font size.
 * Between font windows it maintains glyph selection, current sort query and smart group selection.
 * If glyphs are missing a window will list them and offer the possibility to make the glyphs.
+* The order in which these scripts woosh through the fonts: alphabetically sorted filepaths. Unsaved fonts with no path will be ignored.
 
 # Add Glyphs Panel
 
@@ -25,7 +26,6 @@ This panel pops up when switching between masters and one or more glyphs are mis
 ![The Add Glyph panel](addglyphpanel.jpg)
 
 * If you don't want to add these glyphs, just close the window
-* Perhaps this behaviour should be a preference
 * Newly created glyphs get a copy of the other outline in the background.
 * *If* the source glyph has components, *and* the width of the source glyph matches the width of the baseglyph, *then* the components are copied with the expected width.
 
@@ -35,11 +35,9 @@ This panel pops up when switching between masters and one or more glyphs are mis
 * *seeThatPreviousSet.py* show the previous smart set in the current SpaceCenter.
 * If there is no smart set in the current SpaceCenter the script will pick the first one from the list.
 
-The order in which these scripts woosh through the fonts: alphabetically sorted filepaths.
-
 Notes
 -----
-
 * Does not work in single window mode because single window mode.
 * Script windows, vanilla windows, preference window etc. are excluded from all the wooshing fun.
 * RoboFont key commands can be added in the .py tab of the [Preferences window.](http://doc.robofont.com/documentation/workspace/preferences/python/) (link to RoboFont docs)
+* Maybe showing or not showing the Glyph Add panel should be a preference
