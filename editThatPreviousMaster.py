@@ -137,7 +137,7 @@ def switch(direction=1):
         if g is not None:
             currentLayerName = g.layerName
             if not g.name in nextMaster:
-                OpenWindow(AddSomeGlyphsWindow, nextMaster, g.name)
+                OpenWindow(AddSomeGlyphsWindow, f, nextMaster, g.name)
                 #AddSomeGlyphsWindow(f, nextMaster, g.name)
                 NSBeep()
                 return None
