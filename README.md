@@ -14,6 +14,7 @@ Add these scripts to RF and wire them to a key command and then ⏩ or ⏪ cycle
 * These scripts open the window you're looking at, but for the next or previous font,
 * Maintains window location and size.
 * Between glyph windows it preserves zoom and scroll position.
+* Between glyph windows it preserves active measurements.
 * Between space windows it copies the preview text and preview font size.
 * Between font windows it maintains glyph selection, current sort query and smart group selection.
 * If glyphs are missing a window will list them and offer the possibility to make the glyphs.
