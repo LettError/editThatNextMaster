@@ -13,8 +13,8 @@
     
     With massive help from @typemytype
     @letterror
-    20160918
-    v5
+    20160930
+    v6
 
 
 """
@@ -53,7 +53,6 @@ def getGlyphWindowPosSize():
 def setGlyphWindowPosSize(glyph, pos, size, animate=False, settings=None, viewFrame=None, viewScale=None, layerName=None):
     OpenGlyphWindow(glyph=glyph, newWindow=False)
     w = CurrentGlyphWindow()
-    #help(w)
     view = w.getGlyphView()
     w.window().setPosSize((pos[0], pos[1], size[0], size[1]), animate=animate)
     if viewScale is not None:
@@ -111,7 +110,6 @@ def switch(direction=1):
         fontWindow = CurrentFontWindow()
         selectedGlyphs = f.selection
         currentFontWindowQuery =  fontWindow.getGlyphCollection().getQuery()
-        #help(fontWindow)
         selectedSmartList = fontWindow.fontOverview.views.smartList.getSelection()
         posSize = fontWindow.window().getPosSize()
         nextWindow = nextMaster.document().getMainWindow()
@@ -128,30 +126,20 @@ def switch(direction=1):
         if f.path is not None and nextMaster.path is not None:
             hasOne = False
             OpenWindow(AddSomeGlyphsWindow, f, nextMaster)
-            #AddSomeGlyphsWindow(f, nextMaster)
     elif windowType == "SpaceCenter":
         setSpaceCenterWindowPosSize(nextMaster)
 
     elif windowType == "GlyphWindow":
         g = CurrentGlyph()
         currentMeasurements = g.naked().measurements
-        currentMeasurementWidth = g.width
         if g is not None:
             currentLayerName = g.layerName
             if not g.name in nextMaster:
                 OpenWindow(AddSomeGlyphsWindow, f, nextMaster, g.name)
-                #AddSomeGlyphsWindow(f, nextMaster, g.name)
                 NSBeep()
                 return None
             nextGlyph = nextMaster[g.name]
-            # if nextGlyph.width != 0 and currentMeasurementWidth != 0:
-            #     # we can correct the measurements
-            #     measurementFactor = float(nextGlyph.width)/currentMeasurementWidth
-            #     for m in currentMeasurements:
-            #         m.startPoint.x *= measurementFactor
-            #         m.endPoint.x *= measurementFactor
             nextGlyph.naked().measurements = currentMeasurements
-            nextGlyph.update()
             if nextGlyph is not None:
                 rr = getGlyphWindowPosSize()
                 if rr is not None:
