@@ -134,6 +134,8 @@ def switch(direction=1):
 
     elif windowType == "GlyphWindow":
         g = CurrentGlyph()
+        currentMeasurements = g.naked().measurements
+        currentMeasurementWidth = g.width
         if g is not None:
             currentLayerName = g.layerName
             if not g.name in nextMaster:
@@ -142,6 +144,14 @@ def switch(direction=1):
                 NSBeep()
                 return None
             nextGlyph = nextMaster[g.name]
+            # if nextGlyph.width != 0 and currentMeasurementWidth != 0:
+            #     # we can correct the measurements
+            #     measurementFactor = float(nextGlyph.width)/currentMeasurementWidth
+            #     for m in currentMeasurements:
+            #         m.startPoint.x *= measurementFactor
+            #         m.endPoint.x *= measurementFactor
+            nextGlyph.naked().measurements = currentMeasurements
+            nextGlyph.update()
             if nextGlyph is not None:
                 rr = getGlyphWindowPosSize()
                 if rr is not None:
