@@ -59,7 +59,12 @@ class AddSomeGlyphsWindow(BaseWindowController):
         self.w.l = vanilla.List((0,29,-0,-100), self.candidates, columnDescriptions=columnDescriptions)
         self.w.l.setSelection(range(len(self.candidates)))
         
-        self.w.c = vanilla.TextBox((5, 5, -5, 20), "These glyphs are in %s but not in %s"%(os.path.basename(self.src.path), os.path.basename(self.dst.path)))
+        dstName = srcName = "Untitled"
+        if self.src.path is not None:
+            srcName = os.path.basename(self.src.path)
+        if self.dst.path is not None:
+            dstName = os.path.basename(self.dst.path)
+        self.w.c = vanilla.TextBox((5, 5, -5, 20), "These glyphs are in %s but not in %s"%(srcName, dstName))
         
         self.w.copyCompsCheck = vanilla.CheckBox((10, -60, 200, 20), "Copy the glyph", value=True, callback=self.updateButtonTitle)
         
