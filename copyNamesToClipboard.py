@@ -38,7 +38,7 @@ class NameCopier(object):
         self.w.copyAsUnicode.tag = "unicode"
         self.w.copyAsFeatureGroup = vanilla.Button((2,-38,-2,20), "feature group", self.click, sizeStyle="small")
         self.w.copyAsFeatureGroup.tag = "feature"
-        self.w.caption = vanilla.TextBox((5,-13,-5,20), "Copy selected names to clipboard", sizeStyle="mini")
+        self.w.caption = vanilla.TextBox((6,-15,-5,20), "Copy selected names to clipboard", sizeStyle="mini")
         self.w.open()
         self.w.bind("became main", self.update)
         self.w.bind("became key", self.update)
@@ -46,8 +46,11 @@ class NameCopier(object):
     
     def update(self, sender=None):
         self.font = CurrentFont()
-        names = self.font.selection
-        if len(self.font.selection)==0:
+        if self.font is None:
+            names = []
+        else:
+            names = self.font.selection
+        if len(names)==0:
             self.w.l.set(self.sampleText)
             self.w.copyAsGlyphNames.setTitle("names")
             self.w.copyAsGlyphNamesComma.setTitle("quoted names + comma")
@@ -63,7 +66,10 @@ class NameCopier(object):
             self.w.copyAsUnicode.setTitle(self._asTitle(self._asUnicodeText(names)))
             self.w.copyAsFeatureGroup.setTitle(self._asTitle(self._asFeatureGroup(names)))
         if len(names)==0:
-            self.w.caption.set("No glyphs selected.")
+            if self.font is None:
+                self.w.caption.set("No current font")
+            else:
+                self.w.caption.set("No glyphs selected")
         else:
             self.w.caption.set("Copy %d names"%(len(names)))
     
@@ -99,6 +105,8 @@ class NameCopier(object):
     def click(self, sender):
         t = sender.tag
         f = CurrentFont()
+        if f is None:
+            return
         names = f.selection
         copyable = ""
         if t == "names":
