@@ -27,18 +27,23 @@ class NameCopier(BaseWindowController):
     sampleText = [u"⚪️⚫️⚪️⚪️⚪️⚪️⚫️⚪️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚪️⚫️⚫️⚫️⚫️⚫️⚫️⚪️", u"⚪️⚪️⚫️⚪️⚪️⚫️⚪️⚪️", u"⚪️⚪️⚫️⚪️⚪️⚫️⚪️⚪️", u"⚪️⚫️⚫️⚫️⚫️⚫️⚫️⚪️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚪️⚫️⚪️⚪️⚪️⚪️⚫️⚪️",]
 
     def __init__(self):
-        self.w = vanilla.Window((170, 320), "Copier")
+        self.w = vanilla.Window((170, 320), u"⌘C")
         self.w.l = vanilla.List((0,0,0,-120), self.sampleText)
         self.w.copyAsGlyphNames = vanilla.Button((2,-118,-2,20), "names", self.click, sizeStyle="small")
         self.w.copyAsGlyphNames.tag = "names"
+        self.w.copyAsGlyphNames.bind("1", [])
         self.w.copyAsGlyphNamesComma = vanilla.Button((2,-98,-2,20), "quoted names + comma", self.click, sizeStyle="small")
         self.w.copyAsGlyphNamesComma.tag = "comma"
+        self.w.copyAsGlyphNamesComma.bind("2", [])
         self.w.copyAsSlashedNames = vanilla.Button((2,-78,-2,20), "slash + name", self.click, sizeStyle="small")
         self.w.copyAsSlashedNames.tag = "slash"
+        self.w.copyAsSlashedNames.bind("3", [])
         self.w.copyAsUnicode = vanilla.Button((2,-58,-2,20), "Unicode text", self.click, sizeStyle="small")
         self.w.copyAsUnicode.tag = "unicode"
+        self.w.copyAsUnicode.bind("4", [])
         self.w.copyAsFeatureGroup = vanilla.Button((2,-38,-2,20), "feature group", self.click, sizeStyle="small")
         self.w.copyAsFeatureGroup.tag = "feature"
+        self.w.copyAsFeatureGroup.bind("5", [])
         self.w.caption = vanilla.TextBox((6,-15,-5,20), "Copy selected names to clipboard", sizeStyle="mini")
         self.setUpBaseWindowBehavior()
         self.w.bind("became main", self.update)
