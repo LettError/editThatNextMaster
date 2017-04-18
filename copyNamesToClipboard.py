@@ -1,7 +1,8 @@
 # coding: utf-8
 
-import subprocess
 import vanilla
+from defconAppKit.windows.baseWindow import BaseWindowController
+from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow
 from AppKit import NSPasteboardTypeString, NSPasteboard
 
 """
@@ -16,17 +17,17 @@ from AppKit import NSPasteboardTypeString, NSPasteboard
     Aringacute, AE, Eth, Oslash, Thorn, Dcroat, Hbar, IJ, Ldot, Lslash, Eng, OE, Tbar, aringacute, germandbls, ae, eth, oslash, thorn, dcroat, hbar, ij, ldot, lslash, eng, oe, tbar
 
     /Aringacute/AE/Eth/Oslash/Thorn/Dcroat/Hbar/IJ/Ldot/Lslash/Eng/OE/Tbar/aringacute/germandbls/ae/eth/oslash/thorn/dcroat/hbar/ij/ldot/lslash/eng/oe/tbar
-
-
 """
 
 
         
-class NameCopier(object):
+class NameCopier(BaseWindowController):
     maxTitleLength = 20
-    sampleText = ["Copy the names", "of selected glyphs", "in a couple of useful", "formats to the clipboard."]
+    #sampleText = ["Copy the names", "of selected glyphs", "in a couple of useful", "formats to the clipboard."]
+    sampleText = [u"⚪️⚫️⚪️⚪️⚪️⚪️⚫️⚪️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚪️⚫️⚫️⚫️⚫️⚫️⚫️⚪️", u"⚪️⚪️⚫️⚪️⚪️⚫️⚪️⚪️", u"⚪️⚪️⚫️⚪️⚪️⚫️⚪️⚪️", u"⚪️⚫️⚫️⚫️⚫️⚫️⚫️⚪️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚫️⚪️⚫️⚪️⚪️⚫️⚪️⚫️", u"⚪️⚫️⚪️⚪️⚪️⚪️⚫️⚪️",]
+
     def __init__(self):
-        self.w = vanilla.Window((170, 240), "Copier")
+        self.w = vanilla.Window((170, 320), "Copier")
         self.w.l = vanilla.List((0,0,0,-120), self.sampleText)
         self.w.copyAsGlyphNames = vanilla.Button((2,-118,-2,20), "names", self.click, sizeStyle="small")
         self.w.copyAsGlyphNames.tag = "names"
@@ -39,10 +40,12 @@ class NameCopier(object):
         self.w.copyAsFeatureGroup = vanilla.Button((2,-38,-2,20), "feature group", self.click, sizeStyle="small")
         self.w.copyAsFeatureGroup.tag = "feature"
         self.w.caption = vanilla.TextBox((6,-15,-5,20), "Copy selected names to clipboard", sizeStyle="mini")
-        self.w.open()
+        self.setUpBaseWindowBehavior()
         self.w.bind("became main", self.update)
         self.w.bind("became key", self.update)
         self.update()
+        self.w.open()
+        self.w.l.setSelection([])
     
     def update(self, sender=None):
         self.font = CurrentFont()
@@ -131,4 +134,4 @@ class NameCopier(object):
         pb.setString_forType_(text,  NSPasteboardTypeString)
 
 if __name__ == "__main__":            
-    n = NameCopier()
+    OpenWindow(NameCopier)
