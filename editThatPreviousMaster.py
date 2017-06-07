@@ -133,7 +133,11 @@ def switch(direction=1):
         g = CurrentGlyph()
         currentMeasurements = g.naked().measurements
         if g is not None:
-            currentLayerName = g.layerName
+            # wrap possible UFO3 / fontparts objects
+            if hasattr(g, "layerName"):
+                currentLayerName = g.layerName
+            else:
+                currentLayerName = g.layer.name
             if not g.name in nextMaster:
                 #OpenWindow(AddSomeGlyphsWindow, f, nextMaster, g.name)
                 NSBeep()
