@@ -1,4 +1,6 @@
 # coding: utf-8
+# menuTitle : Copy Names To Clipboard
+# shortCut : command+shift+C
 
 import vanilla
 from defconAppKit.windows.baseWindow import BaseWindowController

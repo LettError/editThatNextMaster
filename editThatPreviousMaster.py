@@ -1,3 +1,6 @@
+# menuTitle : Edit That Previous Master
+# shortCut : command+shift+]
+
 """
 
     If you're editing masters or whatever
@@ -21,7 +24,8 @@
 
 from AppKit import *
 from mojo.UI import *
-from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow
+from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow, version
+
 #import addSomeGlyphsWindow
 #reload(addSomeGlyphsWindow)
 #from addSomeGlyphsWindow import AddSomeGlyphsWindow 
@@ -134,10 +138,12 @@ def switch(direction=1):
         currentMeasurements = g.naked().measurements
         if g is not None:
             # wrap possible UFO3 / fontparts objects
-            if hasattr(g, "layerName"):
-                currentLayerName = g.layerName
-            else:
+            if version[0] == '2':
+                # RF 2.0
                 currentLayerName = g.layer.name
+            else:
+                # RF 1.8.x
+                currentLayerName = g.layerName
             if not g.name in nextMaster:
                 #OpenWindow(AddSomeGlyphsWindow, f, nextMaster, g.name)
                 NSBeep()

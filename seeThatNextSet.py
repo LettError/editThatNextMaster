@@ -1,3 +1,5 @@
+# menuTitle : See That Next Set
+
 from mojo.UI import *
 from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow
 
