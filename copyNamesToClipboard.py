@@ -59,7 +59,7 @@ class NameCopier(BaseWindowController):
         if self.font is None:
             names = []
         else:
-            names = self.font.selection
+            names = self.getSelection()
         if len(names)==0:
             self.w.l.set(self.sampleText)
             self.w.copyAsGlyphNames.setTitle("names")
@@ -111,13 +111,22 @@ class NameCopier(BaseWindowController):
         if not text:
             return "[no unicodes]"
         return text
+    
+    def getSelection(self):
+        ordered = []
+        missing = []
+        sel = list(set(self.font.templateSelection) | set(self.font.selection))
+        for n in self.font.lib['public.glyphOrder']:
+            if n in sel:
+                ordered.append(n)
+        return ordered
         
     def click(self, sender):
         t = sender.tag
         f = CurrentFont()
         if f is None:
             return
-        names = f.selection
+        names = self.getSelection()
         copyable = ""
         if t == "names":
             copyable = self._asSpacedNames(names)
