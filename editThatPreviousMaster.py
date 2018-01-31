@@ -94,7 +94,7 @@ def getOtherMaster(nextFont=True):
         else:
             fontSortKey = f.path
         fonts[fontSortKey]=f
-    sortedPaths = fonts.keys()
+    sortedPaths = list(fonts.keys())
     sortedPaths.sort()
     
     for i in range(len(sortedPaths)):

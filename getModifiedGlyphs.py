@@ -14,7 +14,6 @@ def getModifiedGlyphNames(f):
     names = []
     if f.path is not None:
         glyphsPath = os.path.join(f.path, "glyphs") 
-        print glyphsPath
         os.chdir(glyphsPath)
         p = subprocess.check_output(["git", "diff", "--name-only", glyphsPath])
         for path in p.split("\n"):

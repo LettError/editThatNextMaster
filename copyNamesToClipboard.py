@@ -107,7 +107,11 @@ class NameCopier(BaseWindowController):
         text = ""
         for n in names:
             if self.font[n].unicode is not None:
-                text += unichr(self.font[n].unicode)
+                try:
+                    text += unichr(self.font[n].unicode)
+                except NameError:
+                    # python 3
+                    text += chr(self.font[n].unicode)
         if not text:
             return "[no unicodes]"
         return text
