@@ -30,6 +30,29 @@ from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow, versi
 #reload(addSomeGlyphsWindow)
 #from addSomeGlyphsWindow import AddSomeGlyphsWindow 
 
+def copySelection(g):
+    pointSelection = []
+    compSelection = []
+    for ci, c in enumerate(g.contours):
+        for pi, p in enumerate(c.points):
+            if p.selected:
+                pointSelection.append((ci, pi))
+    for compi, comp in enumerate(g.components):
+        if comp.selected:
+            comp.selection.appen(compi)
+    return pointSelection, compSelection
+
+def applySelection(g, pointSelection, compSelection):
+    # reset current selected points
+    for ci, c in enumerate(g.contours):
+        c.selected = False
+    for ci, c in enumerate(g.components):
+        c.selected = False
+    for ci, pi in pointSelection:
+        g.contours[ci].points[pi].selected = True
+    for ci in compSelection:
+        g.components[ci].selected = True
+
 def getCurrentFontAndWindowFlavor():
     """ Try to find what type the current window is and which font belongs to it."""
     windows = [w for w in NSApp().orderedWindows() if w.isVisible()]
@@ -90,7 +113,7 @@ def getOtherMaster(nextFont=True):
     fonts = {}
     for f in AllFonts():
         if f.path is None:
-            fontSortKey = id(f)
+            fontSortKey = str(id(f))
         else:
             fontSortKey = f.path
         fonts[fontSortKey]=f
@@ -114,6 +137,7 @@ def switch(direction=1):
         fontWindow = CurrentFontWindow()
         selectedGlyphs = f.selection
         currentFontWindowQuery =  fontWindow.getGlyphCollection().getQuery()
+        print("currentFontWindowQuery", currentFontWindowQuery)
         selectedSmartList = fontWindow.fontOverview.views.smartList.getSelection()
         posSize = fontWindow.window().getPosSize()
         nextWindow = nextMaster.document().getMainWindow()
@@ -135,6 +159,7 @@ def switch(direction=1):
 
     elif windowType == "GlyphWindow":
         g = CurrentGlyph()
+        selectedPoints, selectedComps = copySelection(g)
         currentMeasurements = g.naked().measurements
         if g is not None:
             # wrap possible UFO3 / fontparts objects
@@ -149,6 +174,7 @@ def switch(direction=1):
                 NSBeep()
                 return None
             nextGlyph = nextMaster[g.name]
+            applySelection(nextGlyph, selectedPoints, selectedComps)
             nextGlyph.naked().measurements = currentMeasurements
             if nextGlyph is not None:
                 rr = getGlyphWindowPosSize()
