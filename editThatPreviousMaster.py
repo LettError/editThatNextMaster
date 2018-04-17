@@ -11,9 +11,9 @@
     Add this script to RF and wire it to a key command
     and then woosh woosh woosh cycle between the masters.
     The other script, "editThatNextMaster.py" wooshes the other direction.
-    
+
     The order in which these scripts woosh through the fonts: alphabetically sorted filepath.
-    
+
     With massive help from @typemytype
     @letterror
     20160930
@@ -28,7 +28,7 @@ from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow, versi
 
 #import addSomeGlyphsWindow
 #reload(addSomeGlyphsWindow)
-#from addSomeGlyphsWindow import AddSomeGlyphsWindow 
+#from addSomeGlyphsWindow import AddSomeGlyphsWindow
 
 def copySelection(g):
     pointSelection = []
@@ -39,7 +39,7 @@ def copySelection(g):
                 pointSelection.append((ci, pi))
     for compi, comp in enumerate(g.components):
         if comp.selected:
-            comp.selection.appen(compi)
+            compSelection.append(compi)
     return pointSelection, compSelection
 
 def applySelection(g, pointSelection, compSelection):
@@ -119,7 +119,7 @@ def getOtherMaster(nextFont=True):
         fonts[fontSortKey]=f
     sortedPaths = list(fonts.keys())
     sortedPaths.sort()
-    
+
     for i in range(len(sortedPaths)):
         if cf.path == fonts[sortedPaths[i]].path:
             prev = fonts[sortedPaths[i-1]]
