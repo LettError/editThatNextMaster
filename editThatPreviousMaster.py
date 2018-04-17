@@ -49,8 +49,8 @@ def applySelection(g, pointSelection, compSelection):
     for ci, c in enumerate(g.components):
         c.selected = False
     for ci, pi in pointSelection:
-        if g.contours and len(g.contours) >= ci:
-            if len(g.contours[ci].points) >= pi:
+        if g.contours and len(g.contours) >= ci + 1:
+            if len(g.contours[ci].points) >= pi + 1:
                 g.contours[ci].points[pi].selected = True
     for ci in compSelection:
         if len(g.components) >= ci:
