@@ -49,9 +49,12 @@ def applySelection(g, pointSelection, compSelection):
     for ci, c in enumerate(g.components):
         c.selected = False
     for ci, pi in pointSelection:
-        g.contours[ci].points[pi].selected = True
+        if g.contours and len(g.contours) >= ci:
+            if len(g.contours[ci].points) >= pi:
+                g.contours[ci].points[pi].selected = True
     for ci in compSelection:
-        g.components[ci].selected = True
+        if len(g.components) >= ci:
+            g.components[ci].selected = True
 
 def getCurrentFontAndWindowFlavor():
     """ Try to find what type the current window is and which font belongs to it."""
