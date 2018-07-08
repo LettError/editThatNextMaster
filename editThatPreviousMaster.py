@@ -22,7 +22,8 @@
 
 """
 
-from AppKit import *
+#from AppKit import *
+import AppKit
 from mojo.UI import *
 from mojo.roboFont import CurrentFont, CurrentGlyph, AllFonts, OpenWindow, version
 
@@ -58,7 +59,7 @@ def applySelection(g, pointSelection, compSelection):
 
 def getCurrentFontAndWindowFlavor():
     """ Try to find what type the current window is and which font belongs to it."""
-    windows = [w for w in NSApp().orderedWindows() if w.isVisible()]
+    windows = [w for w in AppKit.NSApp().orderedWindows() if w.isVisible()]
     skip = ["PreferencesWindow", "ScriptingWindow"]
     for window in windows:
         if hasattr(window, "windowName"):
@@ -159,7 +160,6 @@ def switch(direction=1):
         #    OpenWindow(AddSomeGlyphsWindow, f, nextMaster)
     elif windowType == "SpaceCenter":
         setSpaceCenterWindowPosSize(nextMaster)
-
     elif windowType == "GlyphWindow":
         g = CurrentGlyph()
         selectedPoints, selectedComps = copySelection(g)
@@ -184,6 +184,16 @@ def switch(direction=1):
                 if rr is not None:
                     p, s, settings, viewFrame, viewScale = rr
                     setGlyphWindowPosSize(nextGlyph, p, s, settings=settings, viewFrame=viewFrame, viewScale=viewScale, layerName=currentLayerName)
+    elif windowType == "SingleFontWindow":
+        print("SingleFontWindow!")
+        fontWindow = CurrentFontWindow()
+        selectedGlyphs = f.selection
+        print("SingleFontWindow", fontWindow, selectedGlyphs)
+        g = CurrentGlyph()
+        if g is not None:
+            selectedPoints, selectedComps = copySelection(g)
+            currentMeasurements = g.naked().measurements
+            print("SingleFontWindow", fontWindow, selectedGlyphs, g, selectedPoints, currentMeasurements)
 
 if __name__ == "__main__":
     switch(-1)
