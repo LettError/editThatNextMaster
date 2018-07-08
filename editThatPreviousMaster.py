@@ -134,6 +134,7 @@ def getOtherMaster(nextFont=True):
                 return prev
 
 def switch(direction=1):
+    print("switching windows", direction)
     currentPath, windowType = getCurrentFontAndWindowFlavor()
     nextMaster = getOtherMaster(direction==1)
     f = CurrentFont()

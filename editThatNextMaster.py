@@ -1,6 +1,7 @@
 # menuTitle : Edit That Next Master
 # shortCut : command+shift+[
     
-from editThatPreviousMaster import switch
-if __name__ == "__main__":
-    switch(1)
+import importlib
+import editThatPreviousMaster
+importlib.reload(editThatPreviousMaster)
+editThatPreviousMaster.switch(1)
