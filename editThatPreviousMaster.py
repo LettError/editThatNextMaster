@@ -194,6 +194,12 @@ def switch(direction=1):
             selectedPoints, selectedComps = copySelection(g)
             currentMeasurements = g.naked().measurements
             print("SingleFontWindow", fontWindow, selectedGlyphs, g, selectedPoints, currentMeasurements)
+        posSize = fontWindow.window().getPosSize()
+        print("SingleFontWindow", posSize)
+        nextWindow = nextMaster.document().getMainWindow()
+        print("SingleFontWindow", nextWindow)
+        nextWindow.setPosSize(posSize)
+        nextWindow.show()
 
 if __name__ == "__main__":
     switch(-1)
