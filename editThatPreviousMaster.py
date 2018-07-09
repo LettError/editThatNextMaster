@@ -134,7 +134,6 @@ def getOtherMaster(nextFont=True):
                 return prev
 
 def switch(direction=1):
-    print("switching windows", direction)
     currentPath, windowType = getCurrentFontAndWindowFlavor()
     nextMaster = getOtherMaster(direction==1)
     f = CurrentFont()
@@ -142,7 +141,6 @@ def switch(direction=1):
         fontWindow = CurrentFontWindow()
         selectedGlyphs = f.selection
         currentFontWindowQuery =  fontWindow.getGlyphCollection().getQuery()
-        print("currentFontWindowQuery", currentFontWindowQuery)
         selectedSmartList = fontWindow.fontOverview.views.smartList.getSelection()
         posSize = fontWindow.window().getPosSize()
         nextWindow = nextMaster.document().getMainWindow()
@@ -186,21 +184,18 @@ def switch(direction=1):
                     p, s, settings, viewFrame, viewScale = rr
                     setGlyphWindowPosSize(nextGlyph, p, s, settings=settings, viewFrame=viewFrame, viewScale=viewScale, layerName=currentLayerName)
     elif windowType == "SingleFontWindow":
-        print("SingleFontWindow!")
         fontWindow = CurrentFontWindow()
         selectedGlyphs = f.selection
-        print("SingleFontWindow", fontWindow, selectedGlyphs)
+        nextWindow = nextMaster.document().getMainWindow()
+        nextWindow = nextWindow.vanillaWrapper()
         g = CurrentGlyph()
         if g is not None:
             selectedPoints, selectedComps = copySelection(g)
             currentMeasurements = g.naked().measurements
-            print("SingleFontWindow", fontWindow, selectedGlyphs, g, selectedPoints, currentMeasurements)
+            #print("SingleFontWindow", fontWindow, selectedGlyphs, g, selectedPoints, currentMeasurements)
         posSize = fontWindow.window().getPosSize()
-        print("SingleFontWindow", posSize)
-        nextWindow = nextMaster.document().getMainWindow()
-        print("SingleFontWindow", nextWindow)
-        nextWindow.setPosSize(posSize)
-        nextWindow.show()
+        nextWindow.window().setPosSize(posSize)
+        nextWindow.window().show()
 
 if __name__ == "__main__":
     switch(-1)
