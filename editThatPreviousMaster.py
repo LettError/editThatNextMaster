@@ -184,6 +184,10 @@ def switch(direction=1):
                     p, s, settings, viewFrame, viewScale = rr
                     setGlyphWindowPosSize(nextGlyph, p, s, settings=settings, viewFrame=viewFrame, viewScale=viewScale, layerName=currentLayerName)
     elif windowType == "SingleFontWindow":
+        selectedPoints = None
+        selectedComps = None
+        currentMeasurements = None
+        nextGlyph = None
         fontWindow = CurrentFontWindow()
         selectedGlyphs = f.selection
         nextWindow = nextMaster.document().getMainWindow()
@@ -192,10 +196,28 @@ def switch(direction=1):
         if g is not None:
             selectedPoints, selectedComps = copySelection(g)
             currentMeasurements = g.naked().measurements
+            nextGlyph = nextMaster[g.name]
             #print("SingleFontWindow", fontWindow, selectedGlyphs, g, selectedPoints, currentMeasurements)
+        # copy the posSize
         posSize = fontWindow.window().getPosSize()
         nextWindow.window().setPosSize(posSize)
         nextWindow.window().show()
+        # set the new current glyph
+        nextWindow.setGlyphByName(g.name)
+        # set the viewscale
+        view = fontWindow.getGlyphView()
+        viewFrame = view.visibleRect()
+        viewScale = view.getGlyphViewScale()
+        nextWindow.setGlyphViewScale(viewScale)
+        # maybe the viewframe needs to be seen as a factor of the rect
+        view.scrollRectToVisible_(viewFrame)
+        
+        nextMaster.selection = [s for s in selectedGlyphs if s in nextMaster]
+        if nextGlyph is not None:
+            applySelection(nextGlyph, selectedPoints, selectedComps)
+            nextGlyph.naked().measurements = currentMeasurements
+        #for n in dir(nextWindow):
+        #    print(n)
 
 if __name__ == "__main__":
     switch(-1)
