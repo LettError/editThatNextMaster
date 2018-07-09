@@ -208,16 +208,27 @@ def switch(direction=1):
         view = fontWindow.getGlyphView()
         viewFrame = view.visibleRect()
         viewScale = view.getGlyphViewScale()
+        view.scrollRectToVisible_(viewFrame)
         nextWindow.setGlyphViewScale(viewScale)
         # maybe the viewframe needs to be seen as a factor of the rect
-        view.scrollRectToVisible_(viewFrame)
         
         nextMaster.selection = [s for s in selectedGlyphs if s in nextMaster]
         if nextGlyph is not None:
             applySelection(nextGlyph, selectedPoints, selectedComps)
             nextGlyph.naked().measurements = currentMeasurements
-        #for n in dir(nextWindow):
-        #    print(n)
+
+        rawText = fontWindow.spaceCenter.getRaw()
+        prefix = fontWindow.spaceCenter.getPre()
+        suffix = fontWindow.spaceCenter.getAfter()
+        size = fontWindow.spaceCenter.getPointSize()
+
+        nextWindow.spaceCenter.setRaw(rawText)
+        nextWindow.spaceCenter.setPre(prefix)
+        nextWindow.spaceCenter.setAfter(suffix)
+        nextWindow.spaceCenter.setPointSize(size)
+
+        for n in dir(nextWindow):
+           print(n)
 
 if __name__ == "__main__":
     switch(-1)
