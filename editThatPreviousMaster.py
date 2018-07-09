@@ -205,11 +205,12 @@ def switch(direction=1):
         # set the new current glyph
         nextWindow.setGlyphByName(g.name)
         # set the viewscale
-        view = fontWindow.getGlyphView()
-        viewFrame = view.visibleRect()
-        viewScale = view.getGlyphViewScale()
-        view.scrollRectToVisible_(viewFrame)
+        currentView = fontWindow.getGlyphView()
+        viewFrame = currentView.visibleRect()
+        viewScale = currentView.getGlyphViewScale()
+        nextView = nextWindow.getGlyphView()
         nextWindow.setGlyphViewScale(viewScale)
+        nextView.scrollRectToVisible_(viewFrame)
         # maybe the viewframe needs to be seen as a factor of the rect
         
         nextMaster.selection = [s for s in selectedGlyphs if s in nextMaster]
