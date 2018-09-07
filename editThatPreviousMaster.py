@@ -173,7 +173,7 @@ def switch(direction=1):
                 currentLayerName = g.layerName
             if not g.name in nextMaster:
                 #OpenWindow(AddSomeGlyphsWindow, f, nextMaster, g.name)
-                NSBeep()
+                AppKit.NSBeep()
                 return None
             nextGlyph = nextMaster[g.name]
             applySelection(nextGlyph, selectedPoints, selectedComps)
