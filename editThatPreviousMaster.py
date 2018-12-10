@@ -161,7 +161,7 @@ def switch(direction=1):
         if g is not None:
             # wrap possible UFO3 / fontparts objects
             if version >= "3.0":
-                # RF 2.0
+                # RF 3.x
                 currentLayerName = g.layer.name
             else:
                 # RF 1.8.x

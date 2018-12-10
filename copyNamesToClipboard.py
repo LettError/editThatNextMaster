@@ -123,6 +123,7 @@ class NameCopier(BaseWindowController):
         for n in self.font.lib['public.glyphOrder']:
             if n in sel:
                 ordered.append(n)
+        expanded = []
         return ordered
         
     def click(self, sender):
