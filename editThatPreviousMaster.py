@@ -117,10 +117,8 @@ def getOtherMaster(nextFont=True):
     fonts = {}
     for f in AllFonts():
         if f.path is None:
-            fontSortKey = str(id(f))
-        else:
-            fontSortKey = f.path
-        fonts[fontSortKey]=f
+            continue
+        fonts[f.path]=f
     sortedPaths = list(fonts.keys())
     sortedPaths.sort()
 
@@ -154,9 +152,6 @@ def switch(direction=1):
             fontWindow.getGlyphCollection().setQuery(currentFontWindowQuery)    # sorts but does not fill it in the form
         except:
             pass
-        #if f.path is not None and nextMaster.path is not None:
-        #    hasOne = False
-        #    OpenWindow(AddSomeGlyphsWindow, f, nextMaster)
     elif windowType == "SpaceCenter":
         setSpaceCenterWindowPosSize(nextMaster)
     elif windowType == "GlyphWindow":
@@ -165,7 +160,7 @@ def switch(direction=1):
         currentMeasurements = g.naked().measurements
         if g is not None:
             # wrap possible UFO3 / fontparts objects
-            if version[0] == '2':
+            if version >= "3.0":
                 # RF 2.0
                 currentLayerName = g.layer.name
             else:
